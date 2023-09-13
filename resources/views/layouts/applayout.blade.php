@@ -28,6 +28,7 @@
     <link rel="stylesheet" href="{{ asset('assets/css/main.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/apex-charts/apex-charts.css') }}" />
+    @stack('css')
     <style>div:where(.swal2-container){z-index: 99999 !important;}</style>
     <script src="{{ asset('assets/vendor/js/helpers.js') }}"></script>
     <script src="{{ asset('assets/js/config.js') }}"></script>
@@ -133,7 +134,7 @@
             <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
               <!-- Search -->
               <div class="navbar-nav align-items-center">
-                <select class="form-control">
+                <select class="form-control" onchange="handleStoreChange(this)">
                   @foreach (LoofyHelper::getStore() as $store)
                     <option value="{{ $store->store_slug }}" {{ $store->store_slug == LoofyHelper::getActiveStore() ? "selected" : "" }}>{{ $store->store_name }}</option>
                   @endforeach
@@ -260,5 +261,32 @@
     <script src="{{ asset("assets/js/sweetalert.js") }}"></script>
     <script src="{{ asset('assets/js/dashboards-analytics.js') }}"></script>
     @stack('js')
+    <script>
+      function handleStoreChange(element) {
+        console.log(element.value);
+        $.ajax({
+          cache: false,
+          url: '{{ route("store.change", LoofyHelper::getActiveStore()) }}',
+          type: 'POST',
+          data: {
+            _token: '{{ csrf_token() }}',
+            store: element.value,
+          },
+          beforeSend: function() {
+            $('button[type="submit"]').prop('disabled', true);
+          },
+          success: function(data) {
+            return location.href = "/store/" + data.message;
+          },
+          error: function(err) {
+            const error = JSON.parse(err.responseText);
+            $('#password').val('');
+            $('button[type="submit"]').prop('disabled', false);
+
+            return Swal.fire('Sign in', error.message, 'warning');
+          }
+        });
+      }
+    </script>
   </body>
 </html>

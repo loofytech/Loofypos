@@ -9,6 +9,19 @@
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createProduct">
           Tambah Produk
         </button>
+        <div class="mt-3">
+          <table id="table" class="table w-100">
+            <thead>
+              <tr>
+                {{-- <th>No</th> --}}
+                <th></th>
+                <th>Nama</th>
+                <th>Harga</th>
+                <th>Aksi</th>
+              </tr>
+            </thead>
+          </table>
+        </div>
       </div>
     </div>
   </div>
@@ -44,8 +57,35 @@
 </div>
 @endsection
 
+@push('css')
+<link rel="stylesheet" href="{{ asset('datatables/datatables.min.css') }}">
+@endpush
+
 @push('js')
+<script src="{{ asset('datatables/datatables.min.js') }}"></script>
 <script>
+  $(document).ready(function() {
+    const table = $('#table').DataTable({
+      processing: true,
+      serverSide: true,
+      ajax: "{{ route('product.data', LoofyHelper::getActiveStore()) }}",
+      columns: [
+        // {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+        {data: 'product_image', name: 'product_image', render: function(value, row, data) {
+          return `<img src="${value}" width="100" height="100" />`;
+        }},
+        {data: 'product_name', name: 'product_name'},
+        {data: 'product_price', name: 'product_price'},
+        {
+          data: 'action', 
+          name: 'action', 
+          orderable: true, 
+          searchable: true
+        },
+      ]
+    });
+  });
+
   $('#new-product').on('submit', function(e) {
     e.preventDefault();
 

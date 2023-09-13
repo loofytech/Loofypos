@@ -10,9 +10,26 @@ use Illuminate\Support\Facades\Validator;
 use Spatie\ImageOptimizer\OptimizerChainFactory;
 use Illuminate\Support\Str;
 use App\Helpers\MyHelper;
+use Yajra\DataTables\Facades\DataTables;
 
 class ProductController extends Controller
 {
+    public function index(Request $request) {
+        $store = Store::where('store_slug', MyHelper::getActiveStore())->first();
+
+        if ($request->ajax()) {
+            $data = Product::where('store_id', $store->id)->latest()->get();
+            return Datatables::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function($row){
+                    $actionBtn = '<a href="javascript:void(0)" class="edit btn btn-success btn-sm">Edit</a> <a href="javascript:void(0)" class="delete btn btn-danger btn-sm">Delete</a>';
+                    return $actionBtn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+    }
+
     public function store(Request $request) {
         try {
             DB::beginTransaction();

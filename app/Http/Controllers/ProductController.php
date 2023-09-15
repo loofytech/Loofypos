@@ -14,6 +14,11 @@ use Yajra\DataTables\Facades\DataTables;
 
 class ProductController extends Controller
 {
+    public function getProductTest() {
+        $store = Store::all();
+        return response()->json(['data' => $store]);
+    }
+
     public function index(Request $request) {
         $store = Store::where('store_slug', MyHelper::getActiveStore())->first();
 

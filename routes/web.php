@@ -20,19 +20,17 @@ Route::group(['prefix' => 'auth', 'controller' => AuthController::class], functi
     Route::post('signin', 'signinPost')->name('login.post');
 });
 
-Route::group(['prefix' => 'store', 'middleware' => ['auth', 'activeStore']], function() {
-    Route::group(['prefix' => '{store_slug}'], function() {
-        Route::get('', [PageController::class, 'dashboard'])->name('dashboard');
-    
-        Route::group(['prefix' => 'product'], function() {
-            Route::get('', [PageController::class, 'product'])->name('product');
-            Route::post('', [ProductController::class, 'store'])->name('product.post');
-        });
-        Route::group(['prefix' => 'product'], function() {
-            Route::get('data', [ProductController::class, 'index'])->name('product.data');
-        });
-        Route::group(['prefix' => 'store'], function() {
-            Route::post('change', [StoreController::class, 'changeStoreActive'])->name('store.change');
-        });
+Route::group(['prefix' => 'store/{store_slug}', 'middleware' => ['auth', 'activeStore']], function() {
+    Route::get('', [PageController::class, 'dashboard'])->name('dashboard');
+
+    Route::group(['prefix' => 'product'], function() {
+        Route::get('', [PageController::class, 'product'])->name('product');
+        Route::post('', [ProductController::class, 'store'])->name('product.post');
+    });
+    Route::group(['prefix' => 'product'], function() {
+        Route::get('data', [ProductController::class, 'index'])->name('product.data');
+    });
+    Route::group(['prefix' => 'store'], function() {
+        Route::post('change', [StoreController::class, 'changeStoreActive'])->name('store.change');
     });
 });

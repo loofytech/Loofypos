@@ -21,6 +21,6 @@ class ActiveStoreMiddleware
             return abort(404);
         }
 
-        return redirect()->route('dashboard', MyHelper::getActiveStore());
+        return $next($request);
     }
 }

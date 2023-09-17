@@ -55,8 +55,8 @@ class ProductController extends Controller
             $pathToOutput = public_path('/lfps_store/');
             $image->move($imagePath, $imageName);
 
-            $optimizerChain = OptimizerChainFactory::create();
-            $optimizerChain->optimize($imagePath.$imageName, $pathToOutput.$imageName);
+            // $optimizerChain = OptimizerChainFactory::create();
+            app(Spatie\ImageOptimizer\OptimizerChain::class)->optimize($imagePath.$imageName, $pathToOutput.$imageName);
 
             unlink($imagePath.$imageName);
 

@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Spatie\ImageOptimizer\OptimizerChainFactory;
+use Spatie\LaravelImageOptimizer\Facades\ImageOptimizer;
 use Illuminate\Support\Str;
 use App\Helpers\MyHelper;
 use Yajra\DataTables\Facades\DataTables;
@@ -56,7 +57,7 @@ class ProductController extends Controller
             $image->move($imagePath, $imageName);
 
             // $optimizerChain = OptimizerChainFactory::create();
-            app(Spatie\ImageOptimizer\OptimizerChain::class)->optimize($imagePath.$imageName, $pathToOutput.$imageName);
+            ImageOptimizer::optimize($imagePath.$imageName, $pathToOutput.$imageName);
 
             unlink($imagePath.$imageName);
 

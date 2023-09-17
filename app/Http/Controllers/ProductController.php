@@ -15,8 +15,8 @@ use Yajra\DataTables\Facades\DataTables;
 class ProductController extends Controller
 {
     public function getProductTest() {
-        $store = Store::all();
-        return response()->json(['data' => $store]);
+        $product = Product::all();
+        return response()->json(['data' => $product]);
     }
 
     public function index(Request $request) {

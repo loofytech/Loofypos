@@ -72,7 +72,7 @@
       columns: [
         // {data: 'DT_RowIndex', name: 'DT_RowIndex'},
         {data: 'product_image', name: 'product_image', render: function(value, row, data) {
-          return `<img src="{{ asset(${value}) }}" width="100" height="100" />`;
+          return `<img src="${value}" width="100" height="100" />`;
         }},
         {data: 'product_name', name: 'product_name'},
         {data: 'product_price', name: 'product_price'},

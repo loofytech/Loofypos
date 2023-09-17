@@ -59,7 +59,7 @@ class ProductController extends Controller
             // $optimizerChain = OptimizerChainFactory::create();
             // ImageOptimizer::optimize($imagePath.$imageName, $pathToOutput.$imageName);
 
-            unlink($imagePath.$imageName);
+            // unlink($imagePath.$imageName);
 
             $product = new Product();
             $product->product_name = $request->product_name;

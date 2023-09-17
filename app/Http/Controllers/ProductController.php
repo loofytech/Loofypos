@@ -57,7 +57,7 @@ class ProductController extends Controller
             $image->move($imagePath, $imageName);
 
             // $optimizerChain = OptimizerChainFactory::create();
-            ImageOptimizer::optimize($imagePath.$imageName, $pathToOutput.$imageName);
+            // ImageOptimizer::optimize($imagePath.$imageName, $pathToOutput.$imageName);
 
             unlink($imagePath.$imageName);
 
@@ -65,7 +65,7 @@ class ProductController extends Controller
             $product->product_name = $request->product_name;
             $product->product_slug = Str::slug($request->product_name . '_' . rand(0, 100), '-');
             $product->product_price = $request->product_price;
-            $product->product_image = '/lfps_store/' . $imageName;
+            $product->product_image = '/lfps_store_dump/' . $imageName;
             $product->store_id = $store->id;
             $product->save();
 

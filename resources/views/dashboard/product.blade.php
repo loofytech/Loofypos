@@ -68,14 +68,17 @@
     const table = $('#table').DataTable({
       processing: true,
       serverSide: true,
+      ordering: false,
       ajax: "{{ route('product.data', LoofyHelper::getActiveStore()) }}",
       columns: [
         // {data: 'DT_RowIndex', name: 'DT_RowIndex'},
-        {data: 'product_image', name: 'product_image', render: function(value, row, data) {
+        {data: 'product_image', name: 'product_image', render: function(value, meta, row) {
           return `<img src="${value}" width="100" height="100" />`;
         }},
         {data: 'product_name', name: 'product_name'},
-        {data: 'product_price', name: 'product_price'},
+        {data: 'product_price', name: 'product_price', render: function(value, meta, row) {
+          return "Rp" + value.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
+        }},
         {
           data: 'action', 
           name: 'action', 

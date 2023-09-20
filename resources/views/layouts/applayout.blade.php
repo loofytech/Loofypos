@@ -109,13 +109,19 @@
             <li class="menu-item @yield('dashboard_menu')">
               <a href="{{ route('dashboard', LoofyHelper::getActiveStore()) }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
-                <div data-i18n="Analytics">Dashboard</div>
+                <div>Dashboard</div>
               </a>
             </li>
             <li class="menu-item @yield('product_menu')">
               <a href="{{ route('product', LoofyHelper::getActiveStore()) }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bxs-basket"></i>
-                <div data-i18n="Analytics">Produk</div>
+                <div>Produk</div>
+              </a>
+            </li>
+            <li class="menu-item @yield('selling_menu')">
+              <a href="{{ route('selling', LoofyHelper::getActiveStore()) }}" class="menu-link">
+                <i class="menu-icon tf-icons bx bxs-cart-alt"></i>
+                <div>Penjualan</div>
               </a>
             </li>
           </ul>
